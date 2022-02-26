@@ -1,0 +1,57 @@
+from news.models import *
+u1 = User.objects.create_user('Alex')
+u2 = User.objects.create_user('Sem')
+a1 = Author.objects.create(author_user=u1)
+a2 = Author.objects.create(author_user=u2)
+c1 = Category.objects.create(category='IT')
+c2 = Category.objects.create(category='Life')
+c3 = Category.objects.create(category='Cats')
+c4 = Category.objects.create(category='Movie')
+c5 = Category.objects.create(category='Eat')
+p1 = Post.objects.create(author=a1, category_type='AR', title='Статья про правильное питание.', text='Текст о правильном питании.')
+p2 = Post.objects.create(author=a1, category_type='AR', title='Статья про сборку ПК', text='Если вы решили собрать компьютер из комплектующих самостоятельно, но вас пугает этот  процесс из-за возможных ошибок или случайных поломок по неопытности, то не нужно волноваться, на самом деле это не сложнее конструктора LEGO — главное, знать нюансы.  Статья поможет пройти все этапы, учесть все подводные камни и прочие грабли.')
+p3 = Post.objects.create(author=a2, category_type='NW', title='В городе Кекс за день родилось 130 котят!', text='Так случилось, что сегодня в славном городе под названием Кекс количество котеек увеличилось на 130 штук. В родах учавствовало 17 кошек, рекорд был у Маруси - она родила 15 котят. По половым признакам было выделено 70 особей женского пола и 60 мужского.')
+p1.post_category.add(c2)
+p1.post_category.add(c5)
+p2.post_category.add(c1)
+p2.post_category.add(c2)
+p3.post_category.add(c2)
+p3.post_category.add(c3)
+co1 = Comment.objects.create(comment_post=p1, user_comment=u2, text='Хорошая статья!')
+co2 = Comment.objects.create(comment_post=p2, user_comment=u2, text='Надо бы как-то попробовать, спасибо за статью.')
+co3 = Comment.objects.create(comment_post=p3, user_comment=u1, text='Действительно интересная статья!')
+co4 = Comment.objects.create(comment_post=p3, user_comment=u1, text='Как у них это получилось??')
+p1.like() 
+p2.like()
+p3.like()
+p3.like()
+p3.like()
+co1.like()
+co1.like()
+co1.like()
+co2.like()
+co3.like()
+co4.like()
+co4.like()
+a1.update_rating()
+a2.update_rating()
+ra = Author.objects.order_by('-rating_author')
+for i in ra[:1]:
+    i.rating_author
+    i.author_user.username
+u1.date_joined
+u2.date_joined
+post_ra = Post.objects.order_by('-rating')
+for i in post_ra[:1]:
+    i.time_in
+    'name author - ' + i.author.author_user.username
+    i.title
+    i.preview()
+    i.rating
+    comment_filter = Comment.objects.filter(comment_post=i)
+    for j in comment_filter:
+        j.datetime
+        'author comment - ' + j.user_comment.username
+        'rating comment - ' + str(j.rating)
+        'text - ' + j.text
+
